@@ -10,25 +10,9 @@ namespace StellarAddressGenerator.Stellar_DotNetCore_SDK
         public enum VersionByte : byte
         {
             ACCOUNT_ID = 6 << 3,
-            SEED = 18 << 3,
-            PRE_AUTH_TX = 19 << 3,
-            SHA256_HASH = 23 << 3
+            SEED = 18 << 3
         }
 
-        public static string EncodeStellarSecretSeed(byte[] data)
-        {
-            return EncodeCheck(VersionByte.SEED, data);
-        }
-
-        public static byte[] DecodeStellarAccountId(string data)
-        {
-            return DecodeCheck(VersionByte.ACCOUNT_ID, data);
-        }
-
-        public static byte[] DecodeStellarSecretSeed(string data)
-        {
-            return DecodeCheck(VersionByte.SEED, data);
-        }
 
         public static string EncodeCheck(VersionByte versionByte, byte[] data)
         {
@@ -41,36 +25,6 @@ namespace StellarAddressGenerator.Stellar_DotNetCore_SDK
             var checksum = CalculateChecksum(bytes.ToArray());
             bytes.AddRange(checksum);
             return Base32Encoding.ToString(bytes.ToArray());
-        }
-
-        public static byte[] DecodeCheck(VersionByte versionByte, string encoded)
-        {
-            for (var i = 0; i < encoded.Length; i++)
-                if (encoded[i] > 127)
-                    throw new ArgumentException("Illegal characters in encoded char array.");
-
-            var decoded = Base32Encoding.ToBytes(encoded);
-            var decodedVersionByte = decoded[0];
-
-            var payload = new byte[decoded.Length - 2];
-            Array.Copy(decoded, 0, payload, 0, payload.Length);
-
-            var data = new byte[payload.Length - 1];
-            Array.Copy(payload, 1, data, 0, data.Length);
-
-            var checksum = new byte[2];
-            Array.Copy(decoded, decoded.Length - 2, checksum, 0, checksum.Length);
-
-            //TODO: Do I need any of these checks? Investigate and remove them if not.
-/*            if (decodedVersionByte != (byte)versionByte)
-                throw new FormatException("Version byte is invalid");
-
-            var expectedChecksum = CalculateChecksum(payload);
-
-            if (!expectedChecksum.SequenceEqual(checksum))
-                throw new FormatException("Checksum invalid");
-*/
-            return data;
         }
 
         protected static byte[] CalculateChecksum(byte[] bytes)

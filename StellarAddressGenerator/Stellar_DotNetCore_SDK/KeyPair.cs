@@ -46,7 +46,7 @@ namespace StellarAddressGenerator.Stellar_DotNetCore_SDK
         /// <summary>
         /// SecretSeed
         /// </summary>
-        public string SecretSeed => StrKey.EncodeStellarSecretSeed(SeedBytes);
+        public string SecretSeed => StrKey.EncodeCheck(StrKey.VersionByte.SEED, SeedBytes);
 
 
         /// <summary>

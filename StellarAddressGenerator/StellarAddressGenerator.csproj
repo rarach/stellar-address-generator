@@ -43,6 +43,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddressGenerator.cs" />
+    <Compile Include="BytesProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stellar_DotNetCore_SDK\Base32Encoding.cs" />

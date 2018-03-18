@@ -46,7 +46,7 @@ namespace StellarAddressGenerator.Stellar_DotNetCore_SDK
 
         public static string ToString(byte[] input)
         {
-            if (input == null || input.Length == 0)                 //TODO: delete if not needed
+            if (input == null || input.Length == 0)
                 throw new ArgumentNullException("input");
 
             var charCount = (int)Math.Ceiling(input.Length / 5d) * 8;
