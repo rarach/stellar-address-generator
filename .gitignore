@@ -1,0 +1,9 @@
+# Visual Studio scaffolding files
+.vs/*
+StellarAddressGenerator.v12.suo
+*.user
+packages/*
+
+# Compiled assemblies
+StellarAddressGenerator/bin/*
+StellarAddressGenerator/obj/*
