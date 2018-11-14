@@ -9,3 +9,8 @@ Inputs are only taken from App.config:
 - prefixes: comma-separated list of account ID prefixes to search for. Ex. GDDDDD,GBARBEQUE,GANIMEDE
 
 Performance is not realy considered, i.e. it could probably be written way more efficient.
+
+Special feature: put --blackhole as command line argument to generate "blackhole" public keys, i.e. addresses that
+have unknown private keys. For instance, the prefix GAAAACEMETERYOFFORGOTTENHEROCOINS would generate address
+GAAAACEMETERYOFFORGOTTENHEROCOINSXXXXXXXXXXXXXXXXXXXWYFK. The filler character ('X' in previous example) comes
+from App.config.

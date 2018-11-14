@@ -57,5 +57,31 @@ namespace StellarAddressGenerator.Stellar_DotNetCore_SDK
                 (byte) ((uint) crc >> 8)
             };
         }
+
+
+        /// <summary>
+        /// Special method that 'fixes' public address that has bad checksum (last 2 bytes) but is otherwise correct. No checks
+        /// are made to verify that the key doesn't actually have other problems.
+        /// </summary>
+        /// <param name="badPublicKey">Public stellar address with incorrect last 2 bytes</param>
+        /// <returns>Corrected public key</returns>
+        public static string CorrectEd25519PublicKey(string badPublicKey)
+        {
+            var decoded = Base32Encoding.ToBytes(badPublicKey);
+
+            var payload = new byte[decoded.Length - 2];
+            Array.Copy(decoded, 0, payload, 0, payload.Length);
+
+            var data = new byte[payload.Length - 1];
+            Array.Copy(payload, 1, data, 0, data.Length);
+
+            var checksum = new byte[2];
+            Array.Copy(decoded, decoded.Length - 2, checksum, 0, checksum.Length);
+
+            var expectedChecksum = CalculateChecksum(payload);
+
+            byte[] correctBytes = payload.Concat(expectedChecksum).ToArray();
+            return Base32Encoding.ToString(correctBytes);
+        }
     }
 }

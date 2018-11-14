@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressGenerator.cs" />
+    <Compile Include="BlackholeAddressGenerator.cs" />
     <Compile Include="BytesProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

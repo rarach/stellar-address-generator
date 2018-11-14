@@ -9,6 +9,18 @@ namespace StellarAddressGenerator
     {
         static void Main(string[] args)
         {
+            if (args.Length == 1 && args[0] == "--blackhole")
+            {
+                runBlackholePublicKeyGenerator();
+            }
+            else
+            {
+                startKeyPairGenerator();
+            }
+        }
+
+        private static void startKeyPairGenerator()
+        {
             string prefixesStr = ConfigurationManager.AppSettings["prefixes"];
             string[] prefixes = prefixesStr.Split(new [] {','}, StringSplitOptions.RemoveEmptyEntries);
 
@@ -33,6 +45,22 @@ namespace StellarAddressGenerator
             {
                 ag.Stop();
             }
+        }
+
+        private static void runBlackholePublicKeyGenerator()
+        {
+            string prefixesStr = ConfigurationManager.AppSettings["prefixes"];
+            string[] prefixes = prefixesStr.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string filler = ConfigurationManager.AppSettings["blackholeFiller"];
+
+            foreach (string prefix in prefixes)
+            {
+                string address = BlackholeAddressGenerator.GetAddress(prefix, filler[0]);
+                Console.WriteLine("Address=" + address);
+            }
+
+            Console.WriteLine("Press ENTER to exit...\n");
+            Console.ReadLine();
         }
     }
 }
